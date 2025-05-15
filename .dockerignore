@@ -1,0 +1,9 @@
+bin/
+obj/
+*.user
+*.suo
+*.git
+*.vs
+.vscode
+Dockerfile
+docker-compose.yml

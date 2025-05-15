@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  webapp:
+    build:
+      context: ./DOMRIA
+      dockerfile: Dockerfile
+    ports:
+      - "7073:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - BotSettings__TelegramToken=7639803055:AAHf2oNIbG9encaqS6d-dtElh-Xl7Mq_SH4
+      - BotSettings__DomRiaApiKey=O0zDXTrKeypgEqPEkvXmiuKuqA6fLhSUegZGnz7x
+      - MongoDb__ConnectionString=mongodb+srv://Fufuhska:Sinz2955800439@cluster0.pgrdu8r.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      - MongoDb__DatabaseName=Cluster0
+      -   Webhook__Url=https://aa45-37-57-120-85.ngrok-free.app/api/telegram
+    
+volumes:
+  mongodata:
