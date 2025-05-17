@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Net;
+using System.Text.Json;
 using DomRia.Config;
 using DOMRIA.Config;
 using DOMRIA.Handlers;
@@ -9,6 +10,8 @@ using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Telegram.Bot;
 
+AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

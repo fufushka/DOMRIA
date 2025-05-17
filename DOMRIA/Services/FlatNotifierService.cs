@@ -21,7 +21,7 @@ public class FlatNotifierService : BackgroundService
     {
         var client = _httpClientFactory.CreateClient();
         client.BaseAddress = new Uri("http://localhost");
-        await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+        await Task.Delay(TimeSpan.FromSeconds(20), stoppingToken);
 
         while (!stoppingToken.IsCancellationRequested)
         {
