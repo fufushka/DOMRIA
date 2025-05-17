@@ -6,7 +6,7 @@ public class UserSearchState
 {
     [BsonId] // 👈 робимо UserId головним ключем (_id)
     public long UserId { get; set; }
-    public int CurrentPage { get; set; } = 1;
+    public int CurrentPage { get; set; } = 0;
 
     public List<int> RoomCountOptions { get; set; } = new();
     public List<DistrictDto> Districts { get; set; } = new();

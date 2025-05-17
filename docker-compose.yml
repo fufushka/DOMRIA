@@ -13,7 +13,7 @@ services:
       - BotSettings__DomRiaApiKey=O0zDXTrKeypgEqPEkvXmiuKuqA6fLhSUegZGnz7x
       - MongoDb__ConnectionString=mongodb+srv://Fufuhska:Sinz2955800439@cluster0.pgrdu8r.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
       - MongoDb__DatabaseName=Cluster0
-      - Webhook__Url=https://4d78-37-57-120-85.ngrok-free.app/api/telegram
+      - Webhook__Url=https://d913-37-57-120-85.ngrok-free.app/api/telegram
     
 volumes:
   mongodata:

@@ -81,6 +81,11 @@ builder.Services.AddScoped<CommandStartHandler>();
 builder.Services.AddScoped<SearchStepHelper>();
 
 //////////////////////////////////////////////////////
+///builder.Logging.ClearProviders(); // очищає всі логери
+builder.Logging.AddConsole(); // додає консоль
+builder.Logging.AddFilter("System.Net.Http.HttpClient", LogLevel.None);
+builder.Logging.AddFilter("System.Net.Http.HttpClient.BotClient", LogLevel.None); // якщо імʼя клієнта є
+
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {

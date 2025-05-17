@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -60,8 +61,6 @@ public class TelegramController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] Update update)
     {
-        Console.WriteLine($"📩 Отримано update: {update?.Message?.Text ?? "NULL"}");
-
         try
         {
             if (update == null)
@@ -78,7 +77,21 @@ public class TelegramController : ControllerBase
                 var message = update.Message;
 
                 if (message.Type == MessageType.Text)
+                {
+                    // 🛡️ Захист від DDoS або шкідливих повідомлень
+                    var text = message.Text?.Trim();
+
+                    if (string.IsNullOrWhiteSpace(text) || ContainsSuspiciousInput(text))
+                    {
+                        await _bot.SendMessage(
+                            message.Chat.Id,
+                            "⚠️ Я не розумію це повідомлення. Спробуйте використати кнопки нижче."
+                        );
+                        return Ok();
+                    }
+
                     return await HandleTextMessage(message);
+                }
 
                 if (message.Chat != null)
                 {
@@ -375,25 +388,35 @@ public class TelegramController : ControllerBase
     private async Task<IActionResult> ShowNextFlats(long chatId, UserSearchState state)
     {
         const int limit = 5;
-        var toShowIds = state.MatchingFlats.Skip(state.CurrentIndex).Take(limit).ToList();
 
-        if (!toShowIds.Any())
+        // Якщо дійшли до кінця поточного списку то завантажуємо нову сторінку
+        if (state.CurrentIndex >= state.MatchingFlats.Count)
         {
-            state.CurrentPage++;
-            var response = await _httpClient.PostAsJsonAsync("/api/flat/search", state);
-            var searchResult = await response.Content.ReadFromJsonAsync<FlatSearchResponse>();
+            var loaded = await TryLoadNextFlatPageAsync(chatId, state);
+            if (!loaded)
+                return Ok();
         }
+
+        var toShowIds = state.MatchingFlats.Skip(state.CurrentIndex).Take(limit).ToList(); // Після можливого оновлення беремо айдішку для показу
 
         foreach (var id in toShowIds)
         {
             var flat = await _httpClient.GetFromJsonAsync<FlatResult>($"/api/flat/{id}");
-            if (flat != null)
+
+            if (flat == null)
             {
-                state.NotifiedFlatIds ??= new();
-                if (!state.NotifiedFlatIds.Contains(id))
-                    state.NotifiedFlatIds.Add(id);
-                await _bot.SendFlatMessage(chatId, flat, state);
+                await _bot.SendMessage(
+                    chatId,
+                    "⚠️ Не вдалося завантажити інформацію про квартиру."
+                );
+                continue;
             }
+
+            state.NotifiedFlatIds ??= new();
+            if (!state.NotifiedFlatIds.Contains(id))
+                state.NotifiedFlatIds.Add(id);
+
+            await _bot.SendFlatMessage(chatId, flat, state);
         }
 
         state.CurrentIndex += toShowIds.Count;
@@ -403,7 +426,7 @@ public class TelegramController : ControllerBase
 
         if (state.CurrentIndex < state.MatchingFlats.Count)
         {
-            int shown = state.CurrentIndex;
+            int shown = state.CurrentIndex + (state.CurrentPage * 100);
             int total = state.TotalFlatCount;
 
             await _bot.SendMessage(
@@ -415,11 +438,8 @@ public class TelegramController : ControllerBase
         }
         else
         {
-            state.Step = null;
-            await TrySaveUserState(state, chatId);
-
-            await _bot.SendMessage(chatId, "Це всі квартири за вашими критеріями.");
-            return await _commandStartHandler.HandleStartCommand(chatId, state.UserId);
+            // Якщо на цій сторінці всі показані то переходимо до наступної
+            return await ShowNextFlats(chatId, state);
         }
     }
 
@@ -447,9 +467,17 @@ public class TelegramController : ControllerBase
 
     private async Task<IActionResult> ShowComparison(long chatId, UserSearchState state)
     {
+        if (state.CompareFlatIds.Count < 1)
+        {
+            await _bot.SendMessage(
+                chatId,
+                "У вас не вибрано жодної квартири для порівняння (потрібно 2) 🧐"
+            );
+            return Ok();
+        }
         if (state.CompareFlatIds.Count < 2)
         {
-            await _bot.SendMessage(chatId, "Додайте ще одну квартиру для порівняння 🧐");
+            await _bot.SendMessage(chatId, "Додайте ще одну квартиру для порівняння  🧐");
             return Ok();
         }
 
@@ -499,5 +527,75 @@ public class TelegramController : ControllerBase
             replyMarkup: buttons
         );
         return Ok();
+    }
+
+    private bool ContainsSuspiciousInput(string input)
+    {
+        // Занадто довге — можливо, атака
+        if (input.Length > 300)
+            return true;
+
+        // Заборонені символи (HTML, скрипти, SQL)
+        var dangerousPatterns = new[]
+        {
+            "<script",
+            "</script",
+            "<",
+            ">",
+            "--",
+            ";",
+            "DROP",
+            "SELECT",
+            "INSERT",
+            "UPDATE",
+            "DELETE",
+            "xp_",
+            "exec",
+            "union",
+            "%",
+            "$",
+        };
+
+        foreach (var pattern in dangerousPatterns)
+        {
+            if (input.IndexOf(pattern, StringComparison.OrdinalIgnoreCase) >= 0)
+                return true;
+        }
+
+        // Якщо лише емодзі, або набір випадкових символів (неалфавітних)
+        if (input.All(c => !char.IsLetterOrDigit(c)))
+            return true;
+
+        return false;
+    }
+
+    private async Task<bool> TryLoadNextFlatPageAsync(long chatId, UserSearchState state)
+    {
+        state.CurrentPage++;
+        var response = await _httpClient.PostAsJsonAsync("/api/flat/search", state);
+        if (!response.IsSuccessStatusCode)
+        {
+            await _bot.SendMessage(chatId, "❌ Не вдалося завантажити наступні квартири.");
+            return false;
+        }
+
+        var searchResult = await response.Content.ReadFromJsonAsync<FlatSearchResponse>();
+
+        if (searchResult?.items == null || !searchResult.items.Any())
+        {
+            state.Step = null;
+            await TrySaveUserState(state, chatId);
+
+            await _bot.SendMessage(chatId, "Це всі квартири за вашими критеріями.");
+            await _commandStartHandler.HandleStartCommand(chatId, state.UserId);
+            return false;
+        }
+
+        // ✅ Успішно оновлюємо стан
+        state.MatchingFlats = searchResult.items;
+        state.CurrentIndex = 0;
+        state.TotalFlatCount = searchResult.count;
+
+        return true;
     }
 }

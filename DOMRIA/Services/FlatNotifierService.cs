@@ -22,6 +22,7 @@ public class FlatNotifierService : BackgroundService
         var client = _httpClientFactory.CreateClient();
         client.BaseAddress = new Uri("http://localhost");
         await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+
         while (!stoppingToken.IsCancellationRequested)
         {
             try
@@ -54,6 +55,8 @@ public class FlatNotifierService : BackgroundService
                     using var scope = _services.CreateScope();
                     var bot = scope.ServiceProvider.GetRequiredService<ITelegramBotClient>();
 
+                    bool userBlocked = false;
+
                     foreach (var flatId in trulyNewFlats)
                     {
                         var flat = await client.GetFromJsonAsync<FlatResult>($"/api/flat/{flatId}");
@@ -70,7 +73,18 @@ public class FlatNotifierService : BackgroundService
                             Console.WriteLine(
                                 $"❌ Користувач {user.UserId} заблокував бота. Видаляємо з бази."
                             );
-                            await client.DeleteAsync($"/api/user/{user.UserId}");
+                            var deleteResponse = await client.DeleteAsync(
+                                $"/api/user/{user.UserId}"
+                            );
+                            if (deleteResponse.IsSuccessStatusCode)
+                                Console.WriteLine($"✅ Користувач {user.UserId} видалений з бази.");
+                            else
+                                Console.WriteLine(
+                                    $"⚠️ Не вдалося видалити user {user.UserId}: {deleteResponse.StatusCode}"
+                                );
+
+                            userBlocked = true;
+                            break; // 🛑 зупиняємо надсилання решти квартир
                         }
                         catch (Exception ex)
                         {
@@ -78,8 +92,10 @@ public class FlatNotifierService : BackgroundService
                                 $"❌ Помилка надсилання повідомлення користувачу {user.UserId}: {ex.Message}"
                             );
                         }
+                    }
 
-                        // ✅ додаємо лише нові, не дублюючи
+                    if (!userBlocked)
+                    {
                         user.NotifiedFlatIds.AddRange(trulyNewFlats);
                         await client.PostAsJsonAsync("/api/user", user);
                     }

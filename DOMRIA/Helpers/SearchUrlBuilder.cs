@@ -88,7 +88,6 @@ public static class SearchUrlBuilder
         int priceCharacteristicId
     )
     {
-        Console.WriteLine($"⏩ Перед AppendPriceRange: min={minPrice}, max={maxPrice}");
         if (minPrice.HasValue && maxPrice.HasValue && minPrice > maxPrice)
         {
             // ⚠️ Переставляємо значення, якщо помилково переплутані
@@ -96,7 +95,7 @@ public static class SearchUrlBuilder
             minPrice = maxPrice;
             maxPrice = temp;
         }
-        Console.WriteLine($"⏩ Перед AppendPriceRange: min={minPrice}, max={maxPrice}");
+
         if (minPrice.HasValue)
             builder.Append($"&characteristic[{priceCharacteristicId}][from]={minPrice.Value}");
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using DomRia.Config;
@@ -95,7 +96,24 @@ public class DomRiaService : IDomRiaService
         try
         {
             var url = $"https://developers.ria.com/dom/info/{id}?api_key={_apiKey}";
-            var flat = await _httpClient.GetFromJsonAsync<FlatInfoResponse>(url);
+            var response = await _httpClient.GetAsync(url);
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                Console.WriteLine($"⚠️ [DomRiaService] Flat with ID {id} not found (404).");
+                return null;
+            }
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine(
+                    $"❌ [DomRiaService] Unexpected status code {response.StatusCode} for ID {id}"
+                );
+                return null;
+            }
+
+            var flat = await response.Content.ReadFromJsonAsync<FlatInfoResponse>();
+
             if (flat == null)
                 return null;
 
@@ -110,10 +128,12 @@ public class DomRiaService : IDomRiaService
                 Url = string.IsNullOrEmpty(flat.BeautifulUrl)
                     ? "https://dom.ria.com/"
                     : $"https://dom.ria.com/uk/{flat.BeautifulUrl}",
+
                 Area =
                     flat.TotalSquareMeters != null
                         ? flat.TotalSquareMeters.Value.ToString("0.##") + " м²"
                         : null,
+
                 FloorInfo = flat.FloorInfo ?? "Поверх не вказано",
                 Street = flat.StreetNameUk ?? "Вулиця не вказана",
                 MetroStation = flat.MetroStationNameUk ?? "Станці метро не вказана",
@@ -132,7 +152,7 @@ public class DomRiaService : IDomRiaService
         catch (Exception ex)
         {
             Console.WriteLine($"❌ [DomRiaService] GetFlatByIdAsync: {ex.Message}");
-            throw;
+            return null;
         }
     }
 }

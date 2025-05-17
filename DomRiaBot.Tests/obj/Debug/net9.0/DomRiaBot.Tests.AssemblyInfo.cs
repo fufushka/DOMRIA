@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DomRiaBot.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e130bedfc2fcad52e0e2e13fc3670122f023545a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cebf9740e4a86f3df3072a371d68577c8ff0f0c8")]
 [assembly: System.Reflection.AssemblyProductAttribute("DomRiaBot.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DomRiaBot.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

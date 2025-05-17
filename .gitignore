@@ -11,3 +11,14 @@
 *.pdb
 *.exe
 *.cache
+*.v2
+.vs/DOMRIA/v17/.suo
+.vs/DOMRIA/v17/DocumentLayout.backup.json
+.vs/DOMRIA/v17/DocumentLayout.json
+*.bin
+*.dll
+*.exe
+DOMRIA/obj/Debug/net8.0/DOMRIA.AssemblyInfo.cs
+*.cache
+*.pdb
+DOMRIA/obj/Debug/net8.0/DOMRIA.sourcelink.json

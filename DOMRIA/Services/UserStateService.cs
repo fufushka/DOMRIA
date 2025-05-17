@@ -77,18 +77,24 @@ namespace DOMRIA.Services
             }
         }
 
-        //public async Task<bool> DeleteAsync(long userId)
-        //{
-        //    try
-        //    {
-        //        var result = await _collection.DeleteOneAsync(s => s.UserId == userId);
-        //        return result.DeletedCount > 0;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine($"❌ [MongoDB] DeleteAsync error: {ex.Message}");
-        //        return false;
-        //    }
-        //}
+        public async Task<bool> DeleteAsync(long userId)
+        {
+            try
+            {
+                var filter = Builders<UserSearchState>.Filter.Eq(u => u.UserId, userId);
+                var result = await _collection.DeleteOneAsync(filter);
+
+                Console.WriteLine(
+                    $"🧪 Delete attempt for UserId {userId}, DeletedCount = {result.DeletedCount}"
+                );
+
+                return result.DeletedCount > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ [MongoDB] DeleteAsync error: {ex.Message}");
+                return false;
+            }
+        }
     }
 }

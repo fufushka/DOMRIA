@@ -109,21 +109,21 @@ public class UserStateController : ControllerBase
         }
     }
 
-    //[HttpDelete("{userId}")]
-    //public async Task<IActionResult> DeleteUser(long userId)
-    //{
-    //    try
-    //    {
-    //        var success = await _repo.DeleteAsync(userId);
-    //        if (!success)
-    //            return StatusCode(500, "Не вдалося видалити користувача");
+    [HttpDelete("{userId}")]
+    public async Task<IActionResult> DeleteUser(long userId)
+    {
+        try
+        {
+            var success = await _repo.DeleteAsync(userId);
+            if (!success)
+                return StatusCode(500, "Не вдалося видалити користувача");
 
-    //        return NoContent();
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Console.WriteLine($"❌ DeleteUser error: {ex.Message}");
-    //        return StatusCode(500, "Помилка при видаленні користувача");
-    //    }
-    //}
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ DeleteUser error: {ex.Message}");
+            return StatusCode(500, "Помилка при видаленні користувача");
+        }
+    }
 }
