@@ -35,7 +35,7 @@ builder.Services.AddHttpClient(
     "BotClient",
     client =>
     {
-        client.BaseAddress = new Uri("http://webapp:80"); // ← твоя API-адреса
+        client.BaseAddress = new Uri("https://domria.onrender.com"); // ← твоя API-адреса
     }
 );
 
