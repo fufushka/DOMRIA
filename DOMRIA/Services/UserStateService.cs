@@ -1,9 +1,10 @@
-﻿using DOMRIA.Models;
+﻿using DOMRIA.Interfaces;
+using DOMRIA.Models;
 using MongoDB.Driver;
 
 namespace DOMRIA.Services
 {
-    public class UserStateService
+    public class UserStateService : IUserStateService
     {
         private readonly IMongoCollection<UserSearchState> _collection;
 

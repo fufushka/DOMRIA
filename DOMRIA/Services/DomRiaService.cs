@@ -2,12 +2,14 @@
 using System.Text;
 using System.Text.Json;
 using DomRia.Config;
+using DOMRIA.Helpers;
+using DOMRIA.Interfaces;
 using DOMRIA.Models;
 using DOMRIA.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 
-public class DomRiaService
+public class DomRiaService : IDomRiaService
 {
     private readonly HttpClient _httpClient;
     private readonly string _apiKey;
@@ -58,32 +60,22 @@ public class DomRiaService
         }
     }
 
-    public async Task<FlatSearchResponse> SearchFlatsByCriteriaAsync(
-        List<int> roomCount,
-        List<int> districtId,
-        int? minPrice,
-        int? maxPrice,
-        string sortBy,
-        int page = 0,
-        int limit = 20,
-        bool notFirstFloor = false,
-        bool notLastFloor = false,
-        bool onlyYeOselya = false
-    )
+    public async Task<FlatSearchResponse> SearchFlatsByCriteriaAsync(UserSearchState state)
     {
         try
         {
-            var url = BuildSearchUrl(
-                roomCount,
-                districtId,
-                minPrice,
-                maxPrice,
-                sortBy,
-                page,
-                limit,
-                notFirstFloor,
-                notLastFloor,
-                onlyYeOselya
+            var url = SearchUrlBuilder.BuildSearchUrl(
+                apiKey: _apiKey,
+                roomCount: state.RoomCountOptions,
+                districtId: state.Districts.Select(d => d.Id).ToList(),
+                minPrice: state.MinPrice,
+                maxPrice: state.MaxPrice,
+                sortBy: state.SortBy,
+                page: state.CurrentPage,
+                limit: 5,
+                notFirstFloor: state.NotFirstFloor,
+                notLastFloor: state.NotLastFloor,
+                onlyYeOselya: state.OnlyYeOselya
             );
 
             Console.WriteLine($"Запит до {url}");
@@ -96,44 +88,6 @@ public class DomRiaService
             Console.WriteLine($"❌ [DomRiaService] SearchFlatsByCriteriaAsync: {ex.Message}");
             throw;
         }
-    }
-
-    private string BuildSearchUrl(
-        List<int> roomCount,
-        List<int> districtId,
-        int? minPrice,
-        int? maxPrice,
-        string sortBy,
-        int page,
-        int limit,
-        bool notFirstFloor = false,
-        bool notLastFloor = false,
-        bool onlyYeOselya = false,
-        int roomCharacteristicId = 209,
-        int priceCharacteristicId = 234,
-        int yeCharacteristicId = 2001
-    )
-    {
-        var builder = new StringBuilder();
-        builder.Append($"https://developers.ria.com/dom/search?api_key={_apiKey}");
-        builder.Append("&category=1&operation_type=1&city_id=10");
-
-        AppendRoomCount(builder, roomCount, roomCharacteristicId);
-        AppendDistricts(builder, districtId);
-        AppendPriceRange(builder, minPrice, maxPrice, priceCharacteristicId);
-        AppendSpecialFilters(
-            builder,
-            notFirstFloor,
-            notLastFloor,
-            onlyYeOselya,
-            yeCharacteristicId
-        );
-        AppendSorting(builder, sortBy);
-
-        builder.Append($"&page={page}");
-        builder.Append($"&limit={limit}");
-
-        return builder.ToString();
     }
 
     public async Task<FlatResult?> GetFlatByIdAsync(int id)
@@ -180,76 +134,5 @@ public class DomRiaService
             Console.WriteLine($"❌ [DomRiaService] GetFlatByIdAsync: {ex.Message}");
             throw;
         }
-    }
-
-    private string MapSortOrder(string sortBy) =>
-        sortBy switch
-        {
-            "price_up" => "p_a", // ціна за зростанням
-            "price_down" => "p_d", // ціна за зростанням
-            "date" => "created-at", // найновіші
-            _ => "",
-        };
-
-    private void AppendRoomCount(
-        StringBuilder builder,
-        List<int> roomCount,
-        int roomCharacteristicId
-    )
-    {
-        if (roomCount.Any())
-        {
-            var min = Math.Min(roomCount.Min(), roomCount.Max());
-            var max = Math.Max(roomCount.Min(), roomCount.Max());
-
-            foreach (var val in roomCount.Distinct())
-            {
-                builder.Append($"&characteristic[{roomCharacteristicId}][]={val}");
-            }
-        }
-    }
-
-    private void AppendDistricts(StringBuilder builder, List<int> districtIds)
-    {
-        foreach (var id in districtIds)
-        {
-            builder.Append($"&district_id[]={id}");
-        }
-    }
-
-    private void AppendPriceRange(
-        StringBuilder builder,
-        int? minPrice,
-        int? maxPrice,
-        int priceCharacteristicId
-    )
-    {
-        if (minPrice != null)
-            builder.Append($"&characteristic[{priceCharacteristicId}][from]={maxPrice}");
-        if (maxPrice != null)
-            builder.Append($"&characteristic[{priceCharacteristicId}][to]={minPrice}");
-    }
-
-    private void AppendSpecialFilters(
-        StringBuilder builder,
-        bool notFirstFloor,
-        bool notLastFloor,
-        bool onlyYeOselya,
-        int yeCharacteristicId
-    )
-    {
-        if (notFirstFloor)
-            builder.Append("&notFirstFloor=1");
-        if (notLastFloor)
-            builder.Append("&notLastFloor=1");
-        if (onlyYeOselya)
-            builder.Append($"&characteristic[{yeCharacteristicId}]={yeCharacteristicId}");
-    }
-
-    private void AppendSorting(StringBuilder builder, string sortBy)
-    {
-        var order = MapSortOrder(sortBy);
-        if (!string.IsNullOrEmpty(order))
-            builder.Append($"&sort={order}");
     }
 }

@@ -41,3 +41,4 @@ C:\Users\dimau\source\repos\DOMRIA\DOMRIA\bin\Debug\net8.0\MongoDB.Driver.dll
 C:\Users\dimau\source\repos\DOMRIA\DOMRIA\bin\Debug\net8.0\SharpCompress.dll
 C:\Users\dimau\source\repos\DOMRIA\DOMRIA\bin\Debug\net8.0\Snappier.dll
 C:\Users\dimau\source\repos\DOMRIA\DOMRIA\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\dimau\source\repos\DOMRIA\DOMRIA\obj\Debug\net8.0\DOMRIA.sourcelink.json

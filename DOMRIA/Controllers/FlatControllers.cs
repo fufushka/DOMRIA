@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using DOMRIA.Interfaces;
 using DOMRIA.Models;
 using DOMRIA.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,9 @@ namespace DomRia.Controllers
     [Route("api/[controller]")]
     public class FlatController : ControllerBase
     {
-        private readonly DomRiaService _domRiaService;
+        private readonly IDomRiaService _domRiaService;
 
-        public FlatController(DomRiaService domRiaService)
+        public FlatController(IDomRiaService domRiaService)
         {
             _domRiaService = domRiaService;
         }
@@ -39,24 +40,12 @@ namespace DomRia.Controllers
             try
             {
                 var districtIds = criteria.Districts.Select(d => d.Id).ToList();
-                var results = await _domRiaService.SearchFlatsByCriteriaAsync(
-                    criteria.RoomCountOptions,
-                    districtIds,
-                    criteria.MaxPrice ?? 0,
-                    criteria.MinPrice ?? 0,
-                    criteria.SortBy,
-                    0,
-                    5,
-                    criteria.NotFirstFloor,
-                    criteria.NotLastFloor,
-                    criteria.OnlyYeOselya
-                );
+                var results = await _domRiaService.SearchFlatsByCriteriaAsync(criteria);
 
                 return Ok(results);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($" SearchFlats error: {ex.Message}");
                 return StatusCode(500, "Не вдалося здійснити пошук квартир");
             }
         }
@@ -68,13 +57,12 @@ namespace DomRia.Controllers
             {
                 var flat = await _domRiaService.GetFlatByIdAsync(id);
                 if (flat == null)
-                    return NotFound("Квартиру не знайдено");
+                    return NotFound();
 
                 return Ok(flat);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($" GetFlatById error: {ex.Message}");
                 return StatusCode(500, "Не вдалося отримати дані квартири");
             }
         }

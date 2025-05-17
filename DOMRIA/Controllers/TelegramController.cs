@@ -3,6 +3,8 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using DOMRIA.Handlers;
+using DOMRIA.Helpers;
+using DOMRIA.Interfaces;
 using DOMRIA.Models;
 using DOMRIA.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -17,23 +19,28 @@ public class TelegramController : ControllerBase
 {
     private readonly ITelegramBotClient _bot;
     private readonly HttpClient _httpClient;
-    private readonly UserStateService _userRepo;
+    private readonly IUserStateService _userRepo;
     private readonly RoomSelectionHandler _roomHandler;
     private readonly DistrictSelectionHandler _districtHandler;
     private readonly BudgetInputHandler _budgetHandler;
     private readonly SortSelectionHandler _sortHandler;
     private readonly SelectionFilterChangeHandler _filterHandler;
     private readonly SpecialFilterHandler _specialfilterHandler;
+    private readonly CommandStartHandler _commandStartHandler;
+
+    private readonly SearchStepHelper _searchStepHelper;
 
     public TelegramController(
         ITelegramBotClient bot,
-        UserStateService userRepo,
+        IUserStateService userRepo,
         RoomSelectionHandler roomHandler,
         DistrictSelectionHandler districtHandler,
         BudgetInputHandler budgetHandler,
         SortSelectionHandler sortHandler,
         SelectionFilterChangeHandler filterHandler,
-        SpecialFilterHandler specialfilterHandler
+        SpecialFilterHandler specialfilterHandler,
+        CommandStartHandler commandStartHandler,
+        SearchStepHelper searchStepHelper
     )
     {
         _bot = bot;
@@ -45,36 +52,53 @@ public class TelegramController : ControllerBase
         _sortHandler = sortHandler;
         _filterHandler = filterHandler;
         _specialfilterHandler = specialfilterHandler;
+        _commandStartHandler = commandStartHandler;
+
+        _searchStepHelper = searchStepHelper;
     }
 
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] Update update)
     {
+        Console.WriteLine($"📩 Отримано update: {update?.Message?.Text ?? "NULL"}");
+
         try
         {
+            if (update == null)
+            {
+                Console.WriteLine("❗ Update обʼєкт = null");
+                return BadRequest();
+            }
+
             if (update.Type == UpdateType.CallbackQuery && update.CallbackQuery != null)
                 return await HandleCallback(update.CallbackQuery);
-            if (update.Type == UpdateType.Message)
+
+            if (update.Type == UpdateType.Message && update.Message != null)
             {
                 var message = update.Message;
-                if (message?.Type == MessageType.Text)
+
+                if (message.Type == MessageType.Text)
                     return await HandleTextMessage(message);
-                else
+
+                if (message.Chat != null)
                 {
-                    var chatId = message.Chat.Id;
                     await _bot.SendMessage(
-                        chatId,
+                        message.Chat.Id,
                         "⚠️ Я можу обробляти лише текстові повідомлення."
                     );
-                    return Ok();
                 }
+
+                return Ok();
             }
+
+            Console.WriteLine("⚠️ Update не є повідомленням або callback.");
+            return Ok();
         }
         catch (Exception ex)
         {
             Console.WriteLine($"❌ Помилка у TelegramController: {ex.Message}");
+            return StatusCode(500); // Telegram отримає 500 і не буде плутанини
         }
-        return Ok();
     }
 
     private async Task<IActionResult> HandleCallback(CallbackQuery callback)
@@ -83,7 +107,8 @@ public class TelegramController : ControllerBase
         var chatId = callback.Message.Chat.Id;
         var data = callback.Data;
         var state = await GetUserState(userId);
-
+        state.FavoriteFlatIds ??= new List<int>();
+        state.CompareFlatIds ??= new List<int>();
         if (data.StartsWith("fav_"))
         {
             var flatId = int.Parse(data.Replace("fav_", ""));
@@ -125,6 +150,7 @@ public class TelegramController : ControllerBase
 
             if (command == "reset")
             {
+                state.CompareFlatIds ??= new List<int>();
                 state.CompareFlatIds.Clear();
                 await TrySaveUserState(state, chatId);
                 await _bot.DeleteMessage(chatId, callback.Message.MessageId);
@@ -148,6 +174,7 @@ public class TelegramController : ControllerBase
                 }
                 else
                 {
+                    state.CompareFlatIds ??= new List<int>();
                     state.CompareFlatIds.Add(flatId);
                     if (!await TrySaveUserState(state, chatId))
                         return Ok();
@@ -161,6 +188,7 @@ public class TelegramController : ControllerBase
         }
         else if (data == "compare_reset")
         {
+            state.CompareFlatIds ??= new List<int>();
             state.CompareFlatIds.Clear();
             await TrySaveUserState(state, chatId);
             await _bot.DeleteMessage(chatId, callback.Message.MessageId);
@@ -179,12 +207,12 @@ public class TelegramController : ControllerBase
         var state = await _userRepo.GetAsync(userId) ?? new UserSearchState { UserId = userId };
 
         if (messageText == "/start")
-            return await HandleStartCommand(chatId, userId);
+            return await _commandStartHandler.HandleStartCommand(chatId, userId);
         if (messageText == "🔍 Знайти квартиру")
-            return await StartSearch(chatId, state);
+            return await _searchStepHelper.StartSearch(chatId, state, TrySaveUserState);
         if (messageText == "⬅️ Назад" && string.IsNullOrEmpty(state.Step))
         {
-            return await HandleStartCommand(chatId, userId);
+            return await _commandStartHandler.HandleStartCommand(chatId, userId);
         }
         switch (state.Step)
         {
@@ -193,21 +221,22 @@ public class TelegramController : ControllerBase
                     messageText,
                     chatId,
                     state,
-                    ShowRoomSelection,
-                    ShowDistrictSelection,
+                    _searchStepHelper.ShowRoomSelection,
+                    _searchStepHelper.ShowDistrictSelection,
                     ShowNextFlats,
-                    PromptFilterChange
+                    _searchStepHelper.PromptFilterChange,
+                    _commandStartHandler.HandleStartCommand
                 );
             case "districts":
                 return await _districtHandler.HandleDistrictSelection(
                     messageText,
                     chatId,
                     state,
-                    ShowBudgetOptions,
+                    _searchStepHelper.ShowBudgetOptions,
                     ShowNextFlats,
-                    ShowDistrictSelection,
-                    PromptFilterChange,
-                    ShowRoomSelection
+                    _searchStepHelper.ShowDistrictSelection,
+                    _searchStepHelper.PromptFilterChange,
+                    _searchStepHelper.ShowRoomSelection
                 );
             case "budget":
                 return await _budgetHandler.HandleBudgetInput(
@@ -215,9 +244,10 @@ public class TelegramController : ControllerBase
                     chatId,
                     state,
                     ShowNextFlats,
-                    ShowDistrictSelection,
-                    PromptFilterChange,
-                    PromptSortSelection
+                    _searchStepHelper.ShowDistrictSelection,
+                    _searchStepHelper.PromptFilterChange,
+                    _searchStepHelper.PromptSortSelection,
+                    _commandStartHandler.HandleStartCommand
                 );
             case "sort_select":
                 return await _sortHandler.HandleSortSelection(
@@ -225,17 +255,25 @@ public class TelegramController : ControllerBase
                     chatId,
                     state,
                     ShowNextFlats,
-                    HandleStartCommand
+                    _commandStartHandler.HandleStartCommand
                 );
             case "done":
                 if (messageText.StartsWith("➡️"))
                 {
                     if (state.MatchingFlats == null || !state.MatchingFlats.Any())
                     {
+                        // 🔧 тут ми виконуємо ПОШУК, якщо квартир ще немає
+                        var response = await _httpClient.PostAsJsonAsync("/api/flat/search", state);
+                        var result = await response.Content.ReadFromJsonAsync<FlatSearchResponse>();
+                        state.MatchingFlats = result?.items ?? new List<int>();
+                        state.TotalFlatCount = result?.count ?? 0;
+                    }
+                    if (state.MatchingFlats == null || !state.MatchingFlats.Any())
+                    {
                         await _bot.SendMessage(
                             chatId,
                             "⚠️ Спочатку оберіть фільтри, перш ніж переходити далі.",
-                            replyMarkup: GetMainMenuMarkup()
+                            replyMarkup: _searchStepHelper.GetMainMenuMarkup()
                         );
                         return Ok();
                     }
@@ -248,9 +286,9 @@ public class TelegramController : ControllerBase
                     messageText,
                     chatId,
                     state,
-                    ShowRoomSelection,
-                    ShowDistrictSelection,
-                    ShowBudgetOptions
+                    _searchStepHelper.ShowRoomSelection,
+                    _searchStepHelper.ShowDistrictSelection,
+                    _searchStepHelper.ShowBudgetOptions
                 );
             case "special_filters":
                 return await _specialfilterHandler.HandleSpecialFilters(
@@ -258,8 +296,8 @@ public class TelegramController : ControllerBase
                     chatId,
                     state,
                     ShowNextFlats,
-                    ShowSpecialFilterOptions,
-                    GetMainMenuMarkup
+                    _searchStepHelper.ShowSpecialFilterOptions,
+                    _searchStepHelper.GetMainMenuMarkup
                 );
         }
 
@@ -273,7 +311,7 @@ public class TelegramController : ControllerBase
             state.Step = "sort_select";
             if (!await TrySaveUserState(state, chatId))
                 return Ok();
-            return await PromptSortSelection(chatId, state);
+            return await _searchStepHelper.PromptSortSelection(chatId, state);
         }
 
         if (messageText == "⚙️ Змінити фільтр пошуку")
@@ -281,14 +319,14 @@ public class TelegramController : ControllerBase
             state.Step = "filter_select";
             if (!await TrySaveUserState(state, chatId))
                 return Ok();
-            return await PromptFilterChange(chatId, state);
+            return await _searchStepHelper.PromptFilterChange(chatId, state);
         }
         if (messageText == "📝 Спеціальні побажання")
         {
             state.Step = "special_filters";
             if (!await TrySaveUserState(state, chatId))
                 return Ok();
-            return await ShowSpecialFilterOptions(chatId, state);
+            return await _searchStepHelper.ShowSpecialFilterOptions(chatId, state);
         }
         if (messageText == "🆚 Порівняти обрані")
         {
@@ -296,7 +334,7 @@ public class TelegramController : ControllerBase
             return await ShowComparison(chatId, state);
         }
 
-        var replyMarkup = state.Step == "done" ? GetMainMenuMarkup() : null;
+        var replyMarkup = state.Step == "done" ? _searchStepHelper.GetMainMenuMarkup() : null;
         await _bot.SendMessage(
             chatId,
             "⚠️ Я не розумію цю команду. Будь ласка, скористайтеся кнопками нижче.",
@@ -304,36 +342,6 @@ public class TelegramController : ControllerBase
         );
 
         return Ok();
-    }
-
-    private async Task<IActionResult> HandleStartCommand(long chatId, long userId)
-    {
-        var state = new UserSearchState { UserId = userId };
-        if (!await TrySaveUserState(state, chatId))
-            return Ok();
-
-        var keyboard = new ReplyKeyboardMarkup(
-            new[]
-            {
-                new[] { new KeyboardButton("🔍 Знайти квартиру") },
-                new[] { new KeyboardButton("💌 Обрані квартири") },
-            }
-        )
-        {
-            ResizeKeyboard = true,
-        };
-
-        await _bot.SendMessage(chatId, "Привіт! Обери дію:", replyMarkup: keyboard);
-        return Ok();
-    }
-
-    private async Task<IActionResult> StartSearch(long chatId, UserSearchState state)
-    {
-        state.Step = "rooms";
-        state.RoomCountOptions.Clear();
-        if (!await TrySaveUserState(state, chatId))
-            return Ok();
-        return await ShowRoomSelection(chatId, state);
     }
 
     private async Task<IActionResult> ShowFavorites(long chatId, long userId)
@@ -350,88 +358,9 @@ public class TelegramController : ControllerBase
             var flat = await _httpClient.GetFromJsonAsync<FlatResult>($"/api/flat/{id}");
             if (flat != null)
             {
-                var msg = $"""
-
-🏠 {flat.Title}
-💰 {flat.Price}
-📍 {flat.Url}
-📐 Площа: {flat.Area}
-🚇 Метро: {flat.MetroStation}
-🏢 ЖК: {flat.HousingComplex}
-📍 Адреса: {flat.Street}
-🌍 Район: {flat.AdminDistrict}, {flat.CityDistrict}
-🏗️ Поверх: {flat.FloorInfo}
-🕒 Опубліковано: {flat.PublishedAt}
-🇺🇦 Підтримка єОселя: {(flat.SupportsYeOselya ? "✅" : "❌")}
-""";
-
-                bool isFav = state.FavoriteFlatIds.Contains(id);
-                var favButtonText = isFav ? "💔 Видалити з улюбленого" : "❤️ Додати в улюблене";
-                var favButtonCallback = isFav ? $"unfav_{id}" : $"fav_{id}";
-
-                var buttons = new List<InlineKeyboardButton[]>
-                {
-                    new[]
-                    {
-                        InlineKeyboardButton.WithCallbackData(favButtonText, favButtonCallback),
-                    },
-                };
-
-                if (flat.latitude.HasValue && flat.longitude.HasValue)
-                {
-                    buttons.Add(
-                        new[]
-                        {
-                            InlineKeyboardButton.WithUrl(
-                                "📍 Показати на мапі",
-                                $"https://www.google.com/maps?q={flat.latitude},{flat.longitude}"
-                            ),
-                        }
-                    );
-                }
-                await _bot.SendMessage(chatId, msg, replyMarkup: new InlineKeyboardMarkup(buttons));
+                await _bot.SendFlatMessage(chatId, flat, state);
             }
         }
-        return Ok();
-    }
-
-    private async Task<IActionResult> PromptSortSelection(long chatId, UserSearchState state)
-    {
-        var keyboard = new ReplyKeyboardMarkup(
-            new[]
-            {
-                new[]
-                {
-                    new KeyboardButton("💰 Спочатку дешеві"),
-                    new KeyboardButton("💰 Спочатку дорогі"),
-                },
-                new[] { new KeyboardButton("🕒 Новіші") },
-            }
-        )
-        {
-            ResizeKeyboard = true,
-        };
-
-        await _bot.SendMessage(chatId, "Оберіть тип сортування:", replyMarkup: keyboard);
-        return Ok();
-    }
-
-    private async Task<IActionResult> PromptFilterChange(long chatId, UserSearchState state)
-    {
-        var keyboard = new ReplyKeyboardMarkup(
-            new[]
-            {
-                new[] { new KeyboardButton("🛏 Кількість кімнат") },
-                new[] { new KeyboardButton("📍 Район") },
-                new[] { new KeyboardButton("💰 Бюджет") },
-                new[] { new KeyboardButton("🔄 Скинути всі фільтри") },
-            }
-        )
-        {
-            ResizeKeyboard = true,
-        };
-
-        await _bot.SendMessage(chatId, "Що саме хочете змінити?", replyMarkup: keyboard);
         return Ok();
     }
 
@@ -443,111 +372,6 @@ public class TelegramController : ControllerBase
             : new UserSearchState { UserId = userId };
     }
 
-    private async Task<IActionResult> ShowRoomSelection(long chatId, UserSearchState state)
-    {
-        var buttons = Enumerable
-            .Range(1, 4)
-            .Select(n => new KeyboardButton((state.RoomCountOptions.Contains(n) ? "✅ " : "") + n))
-            .Chunk(2)
-            .Select(chunk => chunk.ToArray())
-            .ToList();
-
-        buttons.Add(new[] { new KeyboardButton("➡️ Далі") });
-        if (state.PreviousStep == "filter_select")
-        {
-            buttons.Add(new[] { new KeyboardButton("⬅️ Назад") });
-        }
-        var markup = new ReplyKeyboardMarkup(buttons) { ResizeKeyboard = true };
-        await _bot.SendMessage(chatId, "Скільки кімнат ви шукаєте?", replyMarkup: markup);
-        return Ok();
-    }
-
-    private async Task<IActionResult> ShowDistrictSelection(long chatId, UserSearchState state)
-    {
-        if (state.AvailableDistricts.Count == 0)
-        {
-            state.AvailableDistricts = await _httpClient.GetFromJsonAsync<List<DistrictDto>>(
-                "/api/flat/districts"
-            );
-        }
-
-        var buttons = state
-            .AvailableDistricts.Select(d => new KeyboardButton(
-                (state.Districts.Any(sd => sd.Id == d.Id) ? "✅ " : "") + d.Name
-            ))
-            .Chunk(2)
-            .Select(chunk => chunk.ToArray())
-            .ToList();
-
-        buttons.Add(new[] { new KeyboardButton("➡️ Далі") });
-        buttons.Add(new[] { new KeyboardButton("⬅️ Назад") });
-
-        var markup = new ReplyKeyboardMarkup(buttons) { ResizeKeyboard = true };
-        await _bot.SendMessage(chatId, "Оберіть район (можна декілька):", replyMarkup: markup);
-        return Ok();
-    }
-
-    private async Task<IActionResult> ShowBudgetOptions(long chatId)
-    {
-        var priceRanges = new[]
-        {
-            "до 45000",
-            "45000-55000",
-            "55000-65000",
-            "65000-80000",
-            "80000-100000",
-            "100000-200000",
-            "200000+",
-        };
-        var buttons = priceRanges
-            .Chunk(2)
-            .Select(r => r.Select(p => new KeyboardButton(p)).ToArray())
-            .ToList();
-        buttons.Add(new[] { new KeyboardButton("⬅️ Назад") });
-
-        var markup = new ReplyKeyboardMarkup(buttons) { ResizeKeyboard = true };
-        await _bot.SendMessage(chatId, "Оберіть бажаний діапазон ціни:", replyMarkup: markup);
-        return Ok();
-    }
-
-    private async Task<IActionResult> ShowSpecialFilterOptions(long chatId, UserSearchState state)
-    {
-        var buttons = new List<KeyboardButton[]>
-        {
-            new[] { new KeyboardButton((state.OnlyYeOselya ? "✅ " : "") + "🇺🇦 ЄОселя") },
-            new[] { new KeyboardButton((state.NotFirstFloor ? "✅ " : "") + "🧱 Не перший поверх") },
-            new[]
-            {
-                new KeyboardButton((state.NotLastFloor ? "✅ " : "") + "🏢 Не останній поверх"),
-            },
-            new[] { new KeyboardButton("⬅️ Назад"), new KeyboardButton("➡️ Далі") },
-        };
-
-        var markup = new ReplyKeyboardMarkup(buttons) { ResizeKeyboard = true };
-        await _bot.SendMessage(
-            chatId,
-            "Оберіть спеціальні побажання (можна декілька):",
-            replyMarkup: markup
-        );
-        return Ok();
-    }
-
-    private ReplyKeyboardMarkup GetMainMenuMarkup() =>
-        new(
-            new[]
-            {
-                new[] { new KeyboardButton("➡️ Далі") },
-                new[] { new KeyboardButton("⚙️ Змінити фільтр пошуку") },
-                new[] { new KeyboardButton("🔃 Змінити сортування") },
-                new[] { new KeyboardButton("💌 Обрані квартири") },
-                new[] { new KeyboardButton("📝 Спеціальні побажання") },
-                new[] { new KeyboardButton("🆚 Порівняти обрані") },
-            }
-        )
-        {
-            ResizeKeyboard = true,
-        };
-
     private async Task<IActionResult> ShowNextFlats(long chatId, UserSearchState state)
     {
         const int limit = 5;
@@ -558,19 +382,6 @@ public class TelegramController : ControllerBase
             state.CurrentPage++;
             var response = await _httpClient.PostAsJsonAsync("/api/flat/search", state);
             var searchResult = await response.Content.ReadFromJsonAsync<FlatSearchResponse>();
-
-            if (searchResult?.items != null && searchResult.items.Count > 0)
-            {
-                state.MatchingFlats.AddRange(searchResult.items);
-                state.TotalFlatCount = searchResult.count;
-
-                toShowIds = state.MatchingFlats.Skip(state.CurrentIndex).Take(limit).ToList();
-            }
-            else
-            {
-                await _bot.SendMessage(chatId, "Це всі квартири за вашими критеріями.");
-                return Ok();
-            }
         }
 
         foreach (var id in toShowIds)
@@ -581,51 +392,7 @@ public class TelegramController : ControllerBase
                 state.NotifiedFlatIds ??= new();
                 if (!state.NotifiedFlatIds.Contains(id))
                     state.NotifiedFlatIds.Add(id);
-
-                var msg = $"""
-🏠 {flat.Title}
-💰 {flat.Price}
-📍 {flat.Url}
-📐 Площа: {flat.Area}
-🚇 Метро: {flat.MetroStation}
-🏢 ЖК: {flat.HousingComplex}
-📍 Адреса: {flat.Street}
-🌍 Район: {flat.AdminDistrict}, {flat.CityDistrict}
-🏗️ Поверх: {flat.FloorInfo}
-🕒 Опубліковано: {flat.PublishedAt}
-🇺🇦 Підтримка єОселя: {(flat.SupportsYeOselya ? "✅" : "❌")}
-""";
-
-                bool isFav = state.FavoriteFlatIds.Contains(id);
-                var favButtonText = isFav ? "💔 Видалити з улюбленого" : "❤️ Додати в улюблене";
-                var favButtonCallback = isFav ? $"unfav_{id}" : $"fav_{id}";
-
-                var buttons = new List<InlineKeyboardButton[]>
-                {
-                    new[]
-                    {
-                        InlineKeyboardButton.WithCallbackData(favButtonText, favButtonCallback),
-                        InlineKeyboardButton.WithCallbackData(
-                            "🆚 Додати до порівняння",
-                            $"compare_{flat.FlatId}"
-                        ),
-                    },
-                };
-
-                if (flat.latitude.HasValue && flat.longitude.HasValue)
-                {
-                    buttons.Add(
-                        new[]
-                        {
-                            InlineKeyboardButton.WithUrl(
-                                "📍 Показати на мапі",
-                                $"https://www.google.com/maps?q={flat.latitude},{flat.longitude}"
-                            ),
-                        }
-                    );
-                }
-
-                await _bot.SendMessage(chatId, msg, replyMarkup: new InlineKeyboardMarkup(buttons));
+                await _bot.SendFlatMessage(chatId, flat, state);
             }
         }
 
@@ -642,7 +409,7 @@ public class TelegramController : ControllerBase
             await _bot.SendMessage(
                 chatId,
                 $"📊 {shown} / {total} квартир переглянуто",
-                replyMarkup: GetMainMenuMarkup()
+                replyMarkup: _searchStepHelper.GetMainMenuMarkup()
             );
             return Ok();
         }
@@ -650,23 +417,9 @@ public class TelegramController : ControllerBase
         {
             state.Step = null;
             await TrySaveUserState(state, chatId);
-            var markup = new ReplyKeyboardMarkup(
-                new[]
-                {
-                    new[] { new KeyboardButton("💌 Обрані квартири") },
-                    new[] { new KeyboardButton("🔍 Знайти квартиру") },
-                }
-            )
-            {
-                ResizeKeyboard = true,
-            };
 
-            await _bot.SendMessage(
-                chatId,
-                "Це всі квартири за вашими критеріями.",
-                replyMarkup: markup
-            );
-            return Ok();
+            await _bot.SendMessage(chatId, "Це всі квартири за вашими критеріями.");
+            return await _commandStartHandler.HandleStartCommand(chatId, state.UserId);
         }
     }
 

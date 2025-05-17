@@ -2,6 +2,7 @@
 using DomRia.Config;
 using DOMRIA.Config;
 using DOMRIA.Handlers;
+using DOMRIA.Helpers;
 using DOMRIA.Interfaces;
 using DOMRIA.Services;
 using Microsoft.Extensions.Options;
@@ -58,18 +59,26 @@ builder.Services.AddControllers();
 
 ///////////////////Services////////////////////////////
 builder.Services.AddScoped<DomRiaService>();
-builder.Services.AddScoped<IMessageService, TelegramMessageService>();
 
+builder.Services.AddScoped<IUserStateService, UserStateService>();
 builder.Services.AddHostedService<FlatNotifierService>();
+builder.Services.AddScoped<IDomRiaService, DomRiaService>();
 
 /////////////////////////////////////////////////////////
-///////////////////Handlers////////////////////////////
+///////////////////HANDLERS////////////////////////////
 builder.Services.AddScoped<RoomSelectionHandler>();
 builder.Services.AddScoped<DistrictSelectionHandler>();
 builder.Services.AddScoped<BudgetInputHandler>();
 builder.Services.AddScoped<SortSelectionHandler>();
 builder.Services.AddScoped<SelectionFilterChangeHandler>();
 builder.Services.AddScoped<SpecialFilterHandler>();
+builder.Services.AddScoped<CommandStartHandler>();
+
+//////////////////////////////////////////////////////
+
+//////////////////////HELPERS////////////////////////////
+
+builder.Services.AddScoped<SearchStepHelper>();
 
 //////////////////////////////////////////////////////
 var app = builder.Build();
@@ -81,6 +90,7 @@ if (app.Environment.IsDevelopment())
     var webhookUrl = Environment.GetEnvironmentVariable("Webhook__Url");
     if (!string.IsNullOrEmpty(webhookUrl))
     {
+        webhookUrl = webhookUrl.Trim();
         Console.WriteLine($"🔗 Регіструємо webhook: {webhookUrl}");
         await botClient.SetWebhook(webhookUrl);
     }
@@ -89,14 +99,14 @@ if (app.Environment.IsDevelopment())
         Console.WriteLine("⚠️ Webhook__Url не вказано");
     }
 }
+app.Urls.Add("http://*:80");
 app.UseRouting();
 app.MapControllers();
 app.UseSwagger(); // 🧩 генерує Swagger JSON
 app.UseSwaggerUI(); // 💡 відображає Swagger UI
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
-app.Urls.Add("http://*:80");
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllers();
+//});
 app.Run();

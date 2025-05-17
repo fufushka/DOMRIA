@@ -46,13 +46,8 @@ namespace DOMRIA.Handlers
                 state.Step = null;
                 await TrySaveUserState(state, chatId);
 
-                await _bot.SendMessage(
-                    chatId,
-                    "⚠️ За вашими критеріями нічого не знайдено. Ви можете почати новий пошук."
-                );
+                await SendNoResults(chatId);
                 return await HandleStartCommand(chatId, state.UserId);
-
-                return Ok();
             }
 
             state.Step = "done";

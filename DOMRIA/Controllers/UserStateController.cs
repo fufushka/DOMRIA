@@ -1,4 +1,5 @@
-﻿using DOMRIA.Models;
+﻿using DOMRIA.Interfaces;
+using DOMRIA.Models;
 using DOMRIA.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 [Route("api/user")]
 public class UserStateController : ControllerBase
 {
-    private readonly UserStateService _repo;
+    private readonly IUserStateService _repo;
 
-    public UserStateController(UserStateService repo)
+    public UserStateController(IUserStateService repo)
     {
         _repo = repo;
     }

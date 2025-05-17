@@ -24,6 +24,8 @@ namespace DOMRIA.Handlers
             Func<long, UserSearchState, Task<IActionResult>> ShowRoomSelection
         )
         {
+            state.Step = "districts";
+            await TrySaveUserState(state, chatId);
             if (messageText.StartsWith("➡️"))
             {
                 if (state.PreviousStep == "filter_select")

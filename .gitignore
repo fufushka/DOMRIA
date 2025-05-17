@@ -1,1 +1,13 @@
 *.vsidx
+*.pdb
+*.dll
+*.bin
+*.bin
+.vs/ProjectEvaluation/domria.projects.v9.bin
+.vs/DOMRIA/v17/.suo
+*.v2
+.vs/DOMRIA/v17/DocumentLayout.backup.json
+.vs/DOMRIA/v17/DocumentLayout.json
+*.pdb
+*.exe
+*.cache

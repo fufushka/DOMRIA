@@ -2,6 +2,7 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Telegram.Bot;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace DOMRIA.Handlers
 {
@@ -39,6 +40,27 @@ namespace DOMRIA.Handlers
                 );
                 return false;
             }
+        }
+
+        private ReplyKeyboardMarkup GetMainMenuMarkup() =>
+            new(
+                new[]
+                {
+                    new[] { new KeyboardButton("➡️ Далі") },
+                    new[] { new KeyboardButton("⚙️ Змінити фільтр пошуку") },
+                    new[] { new KeyboardButton("🔃 Змінити сортування") },
+                    new[] { new KeyboardButton("💌 Обрані квартири") },
+                    new[] { new KeyboardButton("📝 Спеціальні побажання") },
+                    new[] { new KeyboardButton("🆚 Порівняти обрані") },
+                }
+            )
+            {
+                ResizeKeyboard = true,
+            };
+
+        protected async Task SendNoResults(long chatId)
+        {
+            await _bot.SendMessage(chatId, "⚠️ За вашими критеріями нічого не знайдено.");
         }
 
         protected IActionResult Ok() => new OkResult();

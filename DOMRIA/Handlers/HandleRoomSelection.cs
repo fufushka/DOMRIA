@@ -18,7 +18,8 @@ namespace DOMRIA.Handlers
             Func<long, UserSearchState, Task<IActionResult>> ShowRoomSelection,
             Func<long, UserSearchState, Task<IActionResult>> ShowDistrictSelection,
             Func<long, UserSearchState, Task<IActionResult>> ShowNextFlats,
-            Func<long, UserSearchState, Task<IActionResult>> PromptFilterChange
+            Func<long, UserSearchState, Task<IActionResult>> PromptFilterChange,
+            Func<long, long, Task<IActionResult>> HandleStartCommand
         )
         {
             if (messageText.StartsWith("➡️"))
@@ -31,6 +32,14 @@ namespace DOMRIA.Handlers
                     var result = await resp.Content.ReadFromJsonAsync<FlatSearchResponse>();
                     state.MatchingFlats = result?.items ?? new List<int>();
                     state.TotalFlatCount = result?.count ?? 0;
+                    if (!state.MatchingFlats.Any())
+                    {
+                        state.Step = null;
+                        await TrySaveUserState(state, chatId);
+
+                        await SendNoResults(chatId);
+                        return await HandleStartCommand(chatId, state.UserId);
+                    }
                     state.Step = "done";
                     state.PreviousStep = null;
                     if (!await TrySaveUserState(state, chatId))

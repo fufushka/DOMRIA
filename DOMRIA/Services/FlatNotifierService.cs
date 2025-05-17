@@ -1,19 +1,20 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
+using DOMRIA.Helpers;
 using DOMRIA.Models;
 using Microsoft.Extensions.Hosting;
 using Telegram.Bot;
+using Telegram.Bot.Types;
 
 public class FlatNotifierService : BackgroundService
 {
+    private readonly IServiceProvider _services;
     private readonly IHttpClientFactory _httpClientFactory;
 
-    private readonly IServiceProvider _services;
-
-    public FlatNotifierService(IHttpClientFactory httpClientFactory, IServiceProvider services)
+    public FlatNotifierService(IServiceProvider services, IHttpClientFactory httpClientFactory)
     {
-        _httpClientFactory = httpClientFactory;
         _services = services;
+        _httpClientFactory = httpClientFactory;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -59,24 +60,9 @@ public class FlatNotifierService : BackgroundService
                         if (flat == null)
                             continue;
 
-                        var msg = $"""
-Дивись! З'явився новий варіант для тебе:
-🏠 {flat.Title}
-💰 {flat.Price}
-📍 {flat.Url}
-📐 Площа: {flat.Area}
-🚇 Метро: {flat.MetroStation}
-🏢 ЖК: {flat.HousingComplex}
-📍 Адреса: {flat.Street}
-🌍 Район: {flat.AdminDistrict}, {flat.CityDistrict}
-🏗️ Поверх: {flat.FloorInfo}
-🕒 Опубліковано: {flat.PublishedAt}
-🇺🇦 Підтримка єОселя: {(flat.SupportsYeOselya ? "✅" : "❌")}
-""";
-
                         try
                         {
-                            await bot.SendMessage(user.UserId, msg);
+                            await bot.SendFlatMessage(user.UserId, flat, user);
                         }
                         catch (Telegram.Bot.Exceptions.ApiRequestException ex)
                             when (ex.Message.Contains("bot was blocked"))
