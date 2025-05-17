@@ -32,6 +32,14 @@ public class FlatNotifierService : BackgroundService
                 foreach (var user in users)
                 {
                     var searchResponse = await client.PostAsJsonAsync("/api/flat/search", user);
+
+                    if (!searchResponse.IsSuccessStatusCode)
+                    {
+                        var error = await searchResponse.Content.ReadAsStringAsync();
+
+                        continue;
+                    }
+
                     var searchResult =
                         await searchResponse.Content.ReadFromJsonAsync<FlatSearchResponse>();
 

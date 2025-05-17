@@ -11,4 +11,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build /out .
 
+RUN apt-get update && \
+    apt-get install -y ca-certificates curl gnupg openssl && \
+    update-ca-certificates
+
 ENTRYPOINT ["dotnet", "DOMRIA.dll"]
