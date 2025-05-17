@@ -81,6 +81,10 @@
           "SelectedChildIndex": 9,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "FlatSearchResponse.cs",
@@ -90,12 +94,7 @@
               "RelativeToolTip": "DOMRIA\\Models\\FlatSearchResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T12:05:23.414Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+              "WhenOpened": "2025-05-17T12:05:23.414Z"
             },
             {
               "$type": "Document",
@@ -107,8 +106,7 @@
               "RelativeToolTip": "DOMRIA\\Models\\UserSearchState.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAgAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T11:12:31.76Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-17T11:12:31.76Z"
             },
             {
               "$type": "Document",
@@ -120,8 +118,7 @@
               "RelativeToolTip": "DOMRIA\\Services\\DomRiaService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwBEAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T23:59:02.329Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T23:59:02.329Z"
             },
             {
               "$type": "Document",
@@ -133,8 +130,7 @@
               "RelativeToolTip": "DOMRIA\\Models\\DistrictDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T11:11:56.434Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-17T11:11:56.434Z"
             },
             {
               "$type": "Document",
@@ -146,8 +142,7 @@
               "RelativeToolTip": "DOMRIA\\Services\\UserStateService.cs",
               "ViewState": "AgIAAC8AAAAAAAAAAAAuwF4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T00:24:36.053Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-17T00:24:36.053Z"
             },
             {
               "$type": "Document",
@@ -159,8 +154,7 @@
               "RelativeToolTip": "DomRiaBot.Tests\\FlatControllerTests.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T00:04:05.368Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-17T00:04:05.368Z"
             },
             {
               "$type": "Document",
@@ -172,8 +166,7 @@
               "RelativeToolTip": "DOMRIA\\Interfaces\\IDomRiaService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T00:12:37.893Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-17T00:12:37.893Z"
             },
             {
               "$type": "Document",
@@ -185,8 +178,7 @@
               "RelativeToolTip": "DOMRIA\\Program.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAmwEEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T23:29:51.072Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T23:29:51.072Z"
             },
             {
               "$type": "Document",
@@ -211,8 +203,7 @@
               "RelativeToolTip": "DOMRIA\\Controllers\\UserStateController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAIEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T00:25:09.255Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-17T00:25:09.255Z"
             },
             {
               "$type": "Document",
@@ -224,8 +215,7 @@
               "RelativeToolTip": "DOMRIA\\Controllers\\FlatControllers.cs",
               "ViewState": "AgIAACEAAAAAAAAAAAAowAgAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T00:14:58.898Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-17T00:14:58.898Z"
             },
             {
               "$type": "Document",
@@ -237,8 +227,7 @@
               "RelativeToolTip": "DOMRIA\\Helpers\\SearchStepHelper.cs",
               "ViewState": "AgIAAJIAAAAAAAAAAAAswLsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T23:36:01.106Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T23:36:01.106Z"
             },
             {
               "$type": "Document",
@@ -250,8 +239,7 @@
               "RelativeToolTip": "DOMRIA\\Helpers\\SearchUrlBuilder.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T23:56:05.792Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-16T23:56:05.792Z"
             },
             {
               "$type": "Document",
@@ -263,8 +251,7 @@
               "RelativeToolTip": "DomRiaBot.Tests\\UserStateControllerTests.cs",
               "ViewState": "AgIAAK4AAAAAAAAAAAAiwMAAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T00:21:20.098Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-17T00:21:20.098Z"
             },
             {
               "$type": "Document",
@@ -276,8 +263,7 @@
               "RelativeToolTip": "DOMRIA\\Interfaces\\IMessageService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T01:12:08.582Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-17T01:12:08.582Z"
             },
             {
               "$type": "Document",
@@ -289,8 +275,7 @@
               "RelativeToolTip": "DomRiaBot.Tests\\TelegramControllerTests.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T00:33:29.003Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-17T00:33:29.003Z"
             },
             {
               "$type": "Document",
@@ -302,8 +287,7 @@
               "RelativeToolTip": "DOMRIA\\Interfaces\\IUserStateService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T00:24:16.772Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-17T00:24:16.772Z"
             }
           ]
         }

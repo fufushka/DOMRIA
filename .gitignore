@@ -22,3 +22,5 @@ DOMRIA/obj/Debug/net8.0/DOMRIA.AssemblyInfo.cs
 *.cache
 *.pdb
 DOMRIA/obj/Debug/net8.0/DOMRIA.sourcelink.json
+/.vs/DOMRIA/v17
+.vs/DOMRIA/v17/.suo
