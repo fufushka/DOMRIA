@@ -46,7 +46,7 @@ public class TelegramController : ControllerBase
     {
         _bot = bot;
         _userRepo = userRepo;
-        _httpClient = new HttpClient { BaseAddress = new Uri("http://webapp:80") };
+        _httpClient = new HttpClient { BaseAddress = new Uri("https://domria.onrender.com") };
         _roomHandler = roomHandler;
         _districtHandler = districtHandler;
         _budgetHandler = budgetHandler;
