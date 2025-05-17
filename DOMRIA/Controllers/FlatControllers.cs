@@ -42,7 +42,7 @@ namespace DomRia.Controllers
                 var districtIds = criteria.Districts.Select(d => d.Id).ToList();
                 var results = await _domRiaService.SearchFlatsByCriteriaAsync(criteria);
 
-                return Ok(results);
+                return Ok(results ?? new FlatSearchResponse { count = 0, items = new List<int>() });
             }
             catch (Exception ex)
             {

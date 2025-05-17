@@ -40,8 +40,26 @@ public class FlatNotifierService : BackgroundService
                         continue;
                     }
 
-                    var searchResult =
-                        await searchResponse.Content.ReadFromJsonAsync<FlatSearchResponse>();
+                    var content = await searchResponse.Content.ReadAsStringAsync();
+
+                    if (string.IsNullOrWhiteSpace(content))
+                    {
+                        Console.WriteLine(
+                            $"⚠️ Порожня відповідь на /api/flat/search для user {user.UserId}"
+                        );
+                        continue;
+                    }
+
+                    FlatSearchResponse? searchResult = null;
+                    try
+                    {
+                        searchResult = JsonSerializer.Deserialize<FlatSearchResponse>(content);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"❌ JSON parsing error: {ex.Message}");
+                        continue;
+                    }
 
                     var flatIds = searchResult?.items ?? new List<int>();
                     if (flatIds == null || flatIds.Count == 0)
