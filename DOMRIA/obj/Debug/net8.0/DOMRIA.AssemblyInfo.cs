@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DOMRIA")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c2eb6df34338f25b31ae46f791e4394fd4dd1032")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0d745c27ce24a6d046ff730f93ebba4e2d95cf79")]
 [assembly: System.Reflection.AssemblyProductAttribute("DOMRIA")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DOMRIA")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

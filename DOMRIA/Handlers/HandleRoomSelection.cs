@@ -72,6 +72,12 @@ namespace DOMRIA.Handlers
 
             if (int.TryParse(messageText.Replace("✅", "").Trim(), out var selectedRoom))
             {
+                if (selectedRoom < 1 || selectedRoom > 5)
+                {
+                    await _bot.SendMessage(chatId, "⚠️ Кількість кімнат має бути від 1 до 5.");
+                    return Ok();
+                }
+
                 if (state.RoomCountOptions.Contains(selectedRoom))
                     state.RoomCountOptions.Remove(selectedRoom);
                 else

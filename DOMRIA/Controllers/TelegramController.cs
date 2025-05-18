@@ -496,7 +496,7 @@ public class TelegramController : ControllerBase
 
         string msg = $"""
 🔎 Порівняння:
- 🏠 <a href="{flat1.Url}">{flat1.FlatId}</a>  |  🏠 <a href="{flat2.Url}">{flat2.FlatId}</a>
+ 🏠 <a href="{flat1.Url}">#{flat1.FlatId}</a>  |  🏠 <a href="{flat2.Url}">#{flat2.FlatId}</a>
 💰 {flat1.Price}  |  💰 {flat2.Price}
 📐 {flat1.Area}   |  📐 {flat2.Area}
 🏢 {flat1.FloorInfo} | 🏢 {flat2.FloorInfo}
@@ -520,12 +520,7 @@ public class TelegramController : ControllerBase
             }
         );
 
-        await _bot.SendMessage(
-            chatId,
-            msg,
-            parseMode: Telegram.Bot.Types.Enums.ParseMode.Html,
-            replyMarkup: buttons
-        );
+        await _bot.SendMessage(chatId, msg, parseMode: ParseMode.Html, replyMarkup: buttons);
         return Ok();
     }
 

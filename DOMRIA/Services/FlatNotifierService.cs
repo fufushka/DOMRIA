@@ -42,14 +42,6 @@ public class FlatNotifierService : BackgroundService
 
                     var content = await searchResponse.Content.ReadAsStringAsync();
 
-                    if (string.IsNullOrWhiteSpace(content))
-                    {
-                        Console.WriteLine(
-                            $"⚠️ Порожня відповідь на /api/flat/search для user {user.UserId}"
-                        );
-                        continue;
-                    }
-
                     FlatSearchResponse? searchResult = null;
                     try
                     {
@@ -70,7 +62,6 @@ public class FlatNotifierService : BackgroundService
 
                     if (trulyNewFlats.Count == 0)
                     {
-                        Console.WriteLine($"📭 Немає нових квартир для user {user.UserId}");
                         continue;
                     }
 

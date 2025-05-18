@@ -11,10 +11,12 @@ namespace DOMRIA.Helpers
             this ITelegramBotClient bot,
             long chatId,
             FlatResult flat,
-            UserSearchState state
+            UserSearchState state,
+            bool showHeader = false
         )
         {
             string msg = $"""
+{(showHeader ? "👀 Дивись! З'явився новий варіант для тебе:\n\n" : "")}
 🏠 {flat.Title}
 💰 {flat.Price}
 📍 {flat.Url}
