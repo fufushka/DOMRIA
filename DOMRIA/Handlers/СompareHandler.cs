@@ -24,15 +24,7 @@ public class CompareHandler : BaseHandler
         {
             var command = data.Replace("compare_", "");
 
-            if (command == "reset")
-            {
-                state.CompareFlatIds ??= new List<int>();
-                state.CompareFlatIds.Clear();
-                await TrySaveUserState(state, chatId);
-                await _bot.DeleteMessage(chatId, callback.Message.MessageId);
-                await _bot.AnswerCallbackQuery(callback.Id, "✅ Порівняння очищено");
-            }
-            else if (int.TryParse(command, out int flatId))
+            if (int.TryParse(command, out int flatId))
             {
                 if (state.CompareFlatIds.Contains(flatId))
                 {
