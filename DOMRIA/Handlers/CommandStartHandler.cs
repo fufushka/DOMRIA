@@ -16,11 +16,7 @@ namespace DOMRIA.Handlers
                 return Ok();
 
             var keyboard = new ReplyKeyboardMarkup(
-                new[]
-                {
-                    new[] { new KeyboardButton("🔍 Знайти квартиру") },
-                    new[] { new KeyboardButton("💌 Обрані квартири") },
-                }
+                new[] { new[] { new KeyboardButton("🔍 Знайти квартиру") } }
             )
             {
                 ResizeKeyboard = true,

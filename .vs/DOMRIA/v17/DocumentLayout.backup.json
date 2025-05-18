@@ -5,70 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|c:\\users\\dimau\\source\\repos\\domria\\domria\\controllers\\telegramcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|solutionrelative:domria\\controllers\\telegramcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|c:\\users\\dimau\\source\\repos\\domria\\domria\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|solutionrelative:domria\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|c:\\users\\dimau\\source\\repos\\domria\\domria\\services\\userstateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|solutionrelative:domria\\services\\userstateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|c:\\users\\dimau\\source\\repos\\domria\\domria\\services\\domriaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|solutionrelative:domria\\services\\domriaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6F503FCE-6829-49F8-9D1D-E61B0CD396B1}|DomRiaBot.Tests\\DomRiaBot.Tests.csproj|c:\\users\\dimau\\source\\repos\\domria\\domriabot.tests\\flatcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6F503FCE-6829-49F8-9D1D-E61B0CD396B1}|DomRiaBot.Tests\\DomRiaBot.Tests.csproj|solutionrelative:domriabot.tests\\flatcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|c:\\users\\dimau\\source\\repos\\domria\\domria\\models\\flatsearchresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|solutionrelative:domria\\models\\flatsearchresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|c:\\users\\dimau\\source\\repos\\domria\\domria\\models\\usersearchstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|solutionrelative:domria\\models\\usersearchstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|c:\\users\\dimau\\source\\repos\\domria\\domria\\models\\districtdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|solutionrelative:domria\\models\\districtdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|c:\\users\\dimau\\source\\repos\\domria\\domria\\interfaces\\idomriaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|solutionrelative:domria\\interfaces\\idomriaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|c:\\users\\dimau\\source\\repos\\domria\\domria\\controllers\\flatcontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|solutionrelative:domria\\controllers\\flatcontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|c:\\users\\dimau\\source\\repos\\domria\\domria\\interfaces\\iuserstateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|solutionrelative:domria\\interfaces\\iuserstateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|c:\\users\\dimau\\source\\repos\\domria\\domria\\interfaces\\imessageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|solutionrelative:domria\\interfaces\\imessageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6F503FCE-6829-49F8-9D1D-E61B0CD396B1}|DomRiaBot.Tests\\DomRiaBot.Tests.csproj|c:\\users\\dimau\\source\\repos\\domria\\domriabot.tests\\telegramcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6F503FCE-6829-49F8-9D1D-E61B0CD396B1}|DomRiaBot.Tests\\DomRiaBot.Tests.csproj|solutionrelative:domriabot.tests\\telegramcontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|c:\\users\\dimau\\source\\repos\\domria\\domria\\controllers\\userstatecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|solutionrelative:domria\\controllers\\userstatecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|c:\\users\\dimau\\source\\repos\\domria\\domria\\helpers\\searchstephelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|solutionrelative:domria\\helpers\\searchstephelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|c:\\users\\dimau\\source\\repos\\domria\\domria\\helpers\\searchurlbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6FC5DA3-EFCA-415D-BE7D-6421204BA94D}|DOMRIA\\DOMRIA.csproj|solutionrelative:domria\\helpers\\searchurlbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6F503FCE-6829-49F8-9D1D-E61B0CD396B1}|DomRiaBot.Tests\\DomRiaBot.Tests.csproj|c:\\users\\dimau\\source\\repos\\domria\\domriabot.tests\\userstatecontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6F503FCE-6829-49F8-9D1D-E61B0CD396B1}|DomRiaBot.Tests\\DomRiaBot.Tests.csproj|solutionrelative:domriabot.tests\\userstatecontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -78,108 +14,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "FlatSearchResponse.cs",
-              "DocumentMoniker": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Models\\FlatSearchResponse.cs",
-              "RelativeDocumentMoniker": "DOMRIA\\Models\\FlatSearchResponse.cs",
-              "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Models\\FlatSearchResponse.cs",
-              "RelativeToolTip": "DOMRIA\\Models\\FlatSearchResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T12:05:23.414Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "UserSearchState.cs",
-              "DocumentMoniker": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Models\\UserSearchState.cs",
-              "RelativeDocumentMoniker": "DOMRIA\\Models\\UserSearchState.cs",
-              "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Models\\UserSearchState.cs",
-              "RelativeToolTip": "DOMRIA\\Models\\UserSearchState.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAgAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T11:12:31.76Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DomRiaService.cs",
-              "DocumentMoniker": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Services\\DomRiaService.cs",
-              "RelativeDocumentMoniker": "DOMRIA\\Services\\DomRiaService.cs",
-              "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Services\\DomRiaService.cs",
-              "RelativeToolTip": "DOMRIA\\Services\\DomRiaService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBEAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T23:59:02.329Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "DistrictDto.cs",
-              "DocumentMoniker": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Models\\DistrictDto.cs",
-              "RelativeDocumentMoniker": "DOMRIA\\Models\\DistrictDto.cs",
-              "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Models\\DistrictDto.cs",
-              "RelativeToolTip": "DOMRIA\\Models\\DistrictDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T11:11:56.434Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UserStateService.cs",
-              "DocumentMoniker": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Services\\UserStateService.cs",
-              "RelativeDocumentMoniker": "DOMRIA\\Services\\UserStateService.cs",
-              "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Services\\UserStateService.cs",
-              "RelativeToolTip": "DOMRIA\\Services\\UserStateService.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAuwF4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T00:24:36.053Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "FlatControllerTests.cs",
-              "DocumentMoniker": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DomRiaBot.Tests\\FlatControllerTests.cs",
-              "RelativeDocumentMoniker": "DomRiaBot.Tests\\FlatControllerTests.cs",
-              "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DomRiaBot.Tests\\FlatControllerTests.cs",
-              "RelativeToolTip": "DomRiaBot.Tests\\FlatControllerTests.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T00:04:05.368Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "IDomRiaService.cs",
-              "DocumentMoniker": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Interfaces\\IDomRiaService.cs",
-              "RelativeDocumentMoniker": "DOMRIA\\Interfaces\\IDomRiaService.cs",
-              "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Interfaces\\IDomRiaService.cs",
-              "RelativeToolTip": "DOMRIA\\Interfaces\\IDomRiaService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T00:12:37.893Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Program.cs",
-              "RelativeDocumentMoniker": "DOMRIA\\Program.cs",
-              "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Program.cs",
-              "RelativeToolTip": "DOMRIA\\Program.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAmwEEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T23:29:51.072Z"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -188,106 +24,14 @@
               "RelativeDocumentMoniker": "DOMRIA\\Controllers\\TelegramController.cs",
               "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Controllers\\TelegramController.cs",
               "RelativeToolTip": "DOMRIA\\Controllers\\TelegramController.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAswD8CAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAASwCIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T05:57:56.045Z",
+              "WhenOpened": "2025-05-18T10:57:19.988Z",
               "EditorCaption": ""
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "UserStateController.cs",
-              "DocumentMoniker": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Controllers\\UserStateController.cs",
-              "RelativeDocumentMoniker": "DOMRIA\\Controllers\\UserStateController.cs",
-              "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Controllers\\UserStateController.cs",
-              "RelativeToolTip": "DOMRIA\\Controllers\\UserStateController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T00:25:09.255Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "FlatControllers.cs",
-              "DocumentMoniker": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Controllers\\FlatControllers.cs",
-              "RelativeDocumentMoniker": "DOMRIA\\Controllers\\FlatControllers.cs",
-              "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Controllers\\FlatControllers.cs",
-              "RelativeToolTip": "DOMRIA\\Controllers\\FlatControllers.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAowAgAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T00:14:58.898Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "SearchStepHelper.cs",
-              "DocumentMoniker": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Helpers\\SearchStepHelper.cs",
-              "RelativeDocumentMoniker": "DOMRIA\\Helpers\\SearchStepHelper.cs",
-              "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Helpers\\SearchStepHelper.cs",
-              "RelativeToolTip": "DOMRIA\\Helpers\\SearchStepHelper.cs",
-              "ViewState": "AgIAAJIAAAAAAAAAAAAswLsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T23:36:01.106Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "SearchUrlBuilder.cs",
-              "DocumentMoniker": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Helpers\\SearchUrlBuilder.cs",
-              "RelativeDocumentMoniker": "DOMRIA\\Helpers\\SearchUrlBuilder.cs",
-              "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Helpers\\SearchUrlBuilder.cs",
-              "RelativeToolTip": "DOMRIA\\Helpers\\SearchUrlBuilder.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T23:56:05.792Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "UserStateControllerTests.cs",
-              "DocumentMoniker": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DomRiaBot.Tests\\UserStateControllerTests.cs",
-              "RelativeDocumentMoniker": "DomRiaBot.Tests\\UserStateControllerTests.cs",
-              "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DomRiaBot.Tests\\UserStateControllerTests.cs",
-              "RelativeToolTip": "DomRiaBot.Tests\\UserStateControllerTests.cs",
-              "ViewState": "AgIAAK4AAAAAAAAAAAAiwMAAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T00:21:20.098Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "IMessageService.cs",
-              "DocumentMoniker": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Interfaces\\IMessageService.cs",
-              "RelativeDocumentMoniker": "DOMRIA\\Interfaces\\IMessageService.cs",
-              "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Interfaces\\IMessageService.cs",
-              "RelativeToolTip": "DOMRIA\\Interfaces\\IMessageService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T01:12:08.582Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "TelegramControllerTests.cs",
-              "DocumentMoniker": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DomRiaBot.Tests\\TelegramControllerTests.cs",
-              "RelativeDocumentMoniker": "DomRiaBot.Tests\\TelegramControllerTests.cs",
-              "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DomRiaBot.Tests\\TelegramControllerTests.cs",
-              "RelativeToolTip": "DomRiaBot.Tests\\TelegramControllerTests.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T00:33:29.003Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "IUserStateService.cs",
-              "DocumentMoniker": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Interfaces\\IUserStateService.cs",
-              "RelativeDocumentMoniker": "DOMRIA\\Interfaces\\IUserStateService.cs",
-              "ToolTip": "C:\\Users\\dimau\\source\\repos\\DOMRIA\\DOMRIA\\Interfaces\\IUserStateService.cs",
-              "RelativeToolTip": "DOMRIA\\Interfaces\\IUserStateService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-17T00:24:16.772Z"
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             }
           ]
         }
