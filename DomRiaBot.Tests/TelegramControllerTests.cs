@@ -50,6 +50,13 @@ public class TelegramControllerTests
         var stepHelper = new SearchStepHelper(_mockBot.Object, _mockHttpClientFactory.Object);
 
         var repo = new UserStateService(_mockDatabase.Object);
+        var compareHandler = new CompareHandler(_mockHttpClientFactory.Object, _mockBot.Object);
+        var userStateHelper = new UserStateHelper(_mockHttpClientFactory.Object, _mockBot.Object);
+        var favoritesHandler = new FavoritesHandler(
+            _mockHttpClientFactory.Object,
+            _mockBot.Object,
+            userStateHelper
+        );
 
         _controller = new TelegramController(
             _mockBot.Object,
@@ -61,7 +68,10 @@ public class TelegramControllerTests
             filter,
             special,
             start,
-            stepHelper
+            compareHandler,
+            stepHelper,
+            userStateHelper,
+            favoritesHandler
         );
     }
 
