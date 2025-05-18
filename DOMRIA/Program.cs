@@ -76,11 +76,13 @@ builder.Services.AddScoped<SortSelectionHandler>();
 builder.Services.AddScoped<SelectionFilterChangeHandler>();
 builder.Services.AddScoped<SpecialFilterHandler>();
 builder.Services.AddScoped<CommandStartHandler>();
+builder.Services.AddScoped<CompareHandler>();
+builder.Services.AddScoped<FavoritesHandler>();
 
 //////////////////////////////////////////////////////
 
 //////////////////////HELPERS////////////////////////////
-
+builder.Services.AddScoped<UserStateHelper>();
 builder.Services.AddScoped<SearchStepHelper>();
 
 //////////////////////////////////////////////////////

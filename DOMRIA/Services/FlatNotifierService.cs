@@ -82,7 +82,7 @@ public class FlatNotifierService : BackgroundService
 
                         try
                         {
-                            await bot.SendFlatMessage(user.UserId, flat, user);
+                            await bot.SendFlatMessage(user.UserId, flat, user, true);
                         }
                         catch (Telegram.Bot.Exceptions.ApiRequestException ex)
                             when (ex.Message.Contains("bot was blocked"))
@@ -101,7 +101,7 @@ public class FlatNotifierService : BackgroundService
                                 );
 
                             userBlocked = true;
-                            break; // 🛑 зупиняємо надсилання решти квартир
+                            break;
                         }
                         catch (Exception ex)
                         {

@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 public class UserSearchState
 {
-    [BsonId] // 👈 робимо UserId головним ключем (_id)
+    [BsonId] // UserId - головний ключ (_id)
     public long UserId { get; set; }
     public int CurrentPage { get; set; } = 0;
 
@@ -21,7 +21,7 @@ public class UserSearchState
     public List<int> CompareFlatIds { get; set; } = new();
     public string? Step { get; set; }
     public string? PreviousStep { get; set; }
-    public string? SortBy { get; set; } = "date"; // Можливі значення: "price", "area", "date"
+    public string? SortBy { get; set; } = "date"; //  "price", "area", "date"
 
     public bool NotFirstFloor { get; set; } = false;
     public bool NotLastFloor { get; set; } = false;

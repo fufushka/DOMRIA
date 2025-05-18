@@ -42,7 +42,7 @@ namespace DOMRIA.Handlers
             }
         }
 
-        private ReplyKeyboardMarkup GetMainMenuMarkup() =>
+        protected ReplyKeyboardMarkup GetMainMenuMarkup() =>
             new(
                 new[]
                 {

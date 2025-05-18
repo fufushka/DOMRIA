@@ -25,14 +25,13 @@ public class DomRiaService : IDomRiaService
     {
         try
         {
-            Console.WriteLine("Запит до DomRia API при пошуку районів: ");
             var url = $"https://developers.ria.com/dom/cities_districts/10?api_key={_apiKey}";
             var response = await _httpClient.GetStringAsync(url);
 
             var result = new List<DistrictDto>();
             var json = JsonDocument.Parse(response).RootElement;
 
-            // Перший рівень — це масив масивів => беремо перший масив
+            // Спочатку це масив масивів а потам беремо перший масив
             if (json.ValueKind == JsonValueKind.Array && json.GetArrayLength() > 0)
             {
                 var innerArray = json[0]; // беремо внутрішній масив
