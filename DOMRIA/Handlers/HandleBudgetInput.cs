@@ -82,7 +82,7 @@ namespace DOMRIA.Handlers
             if (state.PreviousStep == "filter_select")
             {
                 state.CurrentIndex = 0;
-                state.CurrentPage = 1;
+                state.CurrentPage = 0;
 
                 var resp = await _httpClient.PostAsJsonAsync("/api/flat/search", state);
                 var result = await resp.Content.ReadFromJsonAsync<FlatSearchResponse>();
